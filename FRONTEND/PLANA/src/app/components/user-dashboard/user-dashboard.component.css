@@ -1,0 +1,215 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* gap: 20px; */
+    /* background: green; */
+    border-radius: 5px;
+    background: rgb(216, 216, 216);
+}
+
+.container .navbar{
+    width: 98.6%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #36C2CE;
+}
+
+.container .navbar .header{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .header h3, i{
+    font-size: 30px;
+    color: white;
+}
+
+.navbar .menu{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.navbar .menu p{
+    font-size: 20px;
+    color: white;
+}
+
+.navbar .menu p:hover{
+    cursor: pointer;
+    color: black;
+}
+
+.search-username{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    /* background: blue; */
+}
+
+.search-username .search-events{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* background: brown; */
+}
+
+.search-events input{
+    width: 80%;
+    height: 40%;
+    padding: 5px;
+    border-radius: 10px;
+    margin-left: 10px;
+    border: none;
+}
+
+.search-events i{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    color: rgb(73, 73, 73);
+}
+
+.search-events i:hover{
+    cursor: pointer;
+    color: black;
+}
+
+.search-username .welcome-user{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: indigo; */
+}
+
+.welcome-user p{
+    font-size: 20px;
+    color: rgb(73, 73, 73);
+}
+
+.bottom{
+   height: 80%;
+   width: 100%;
+   display: flex;
+   justify-content: space-around;
+   /* background: blueviolet; */
+}
+
+.bottom .upcoming-events{
+    width: 50%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* background: red; */
+}
+
+.upcoming-events h3{
+    font-size: 18px;
+    color: rgb(73, 73, 73);
+}
+
+.upcoming-events .images-events{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* background: green; */
+}
+
+.images-events .image-description{
+    width: 90%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 10px;
+    /* background: blue; */
+}
+
+.image-description img{
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+}
+
+.image-description p{
+    width: 100%;
+    height: 20%;
+}
+
+.bottom .bookings{
+    width: 50%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* background: blue; */
+}
+
+.bookings h3{
+    font-size: 18px;
+    color: rgb(73, 73, 73);
+}
+
+.bookings .images-bookings{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    /* background: purple; */
+}
+
+.images-bookings .image-description{
+    width: 90%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    /* background: blue; */
+}

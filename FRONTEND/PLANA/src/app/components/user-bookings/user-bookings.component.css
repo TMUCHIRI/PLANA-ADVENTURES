@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    background: rgb(216, 216, 216);
+}
+
+.container .navbar{
+    width: 98.6%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 10px;
+    background: #36C2CE;
+}
+
+.navbar .header{
+    width: 20%;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    /* background: green; */
+}
+
+.navbar .header h3, i{
+    color: white;
+    font-size: 30px;
+}
+
+.navbar .title{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin-right: 230px;
+    align-items: center;
+    /* background: yellow; */
+}
+
+.navbar .title h3{
+    font-size: 30px;
+    color: white;
+}
+
+.container .bottom{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    /* background: green; */
+}
+
+.bottom .heading{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin-top: 5px;
+    /* background: red; */
+}
+
+.bottom .heading h4{
+    font-size: 20px;
+    color: black;
+}
+
+.bottom .event-container{
+    width: 70%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(187, 187, 187);
+    margin-bottom: 5px;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  th {
+    background-color: #36C2CE;
+    color: white;
+  }
+  
+  button[type="reset"] {
+    background-color: rgb(247, 70, 70);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button[type="reset"]:hover {
+    background-color: rgb(252, 17, 17);
+    color: black;
+  }

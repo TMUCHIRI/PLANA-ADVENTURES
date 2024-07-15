@@ -1,0 +1,119 @@
+<div class="container">
+
+  <div class="navbar">
+
+    <div class="logo">
+      <h3>PLANA</h3>
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+    </div>
+
+    <div class="title">
+      <h3>EVENTS DASHBOARD</h3>
+    </div>
+
+  </div>
+
+  <div class="bottom">
+
+    <div class="events-text">
+      <h4>Events</h4>
+      <button id="create-event-btn">CREATE EVENT</button>
+    </div>
+
+    <table>
+      <tr>
+        <th>Event</th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td>Factory Opening</td>
+        <td>07/07/2024</td>
+        <td>Major factory opening</td>
+        <td class="btns">
+          <button class="cancel-btn">Cancel</button>
+          <button class="update-btn">Update</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Annual Conference</td>
+        <td>10/10/2024</td>
+        <td>Conference for employees</td>
+        <td class="btns">
+          <button class="cancel-btn">Cancel</button>
+          <button class="update-btn">Update</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Team Building</td>
+        <td>12/12/2024</td>
+        <td>Team-building activity</td>
+        <td class="btns">
+          <button class="cancel-btn">Cancel</button>
+          <button class="update-btn">Update</button>
+        </td>
+      </tr>
+    </table>
+    
+  </div>
+
+</div>
+
+<div id="create-event-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Create Event</h2>
+    <form #eventForm="ngForm" (ngSubmit)="onSubmit(eventForm)">
+      <label for="event-title">Event Title</label>
+      <input type="text" id="event-title" name="eventTitle" ngModel required>
+      <div *ngIf="eventForm.controls['eventTitle']?.touched && eventForm.controls['eventTitle'].invalid" class="error">
+        Event Title is required.
+      </div>
+
+      <label for="event-description">Event Description</label>
+      <textarea id="event-description" name="eventDescription" ngModel required></textarea>
+      <div *ngIf="eventForm.controls['eventDescription']?.touched && eventForm.controls['eventDescription'].invalid" class="error">
+        Event Description is required.
+      </div>
+
+      <label for="event-date">Event Date</label>
+      <input type="date" id="event-date" name="eventDate" ngModel required>
+      <div *ngIf="eventForm.controls['eventDate']?.touched && eventForm.controls['eventDate'].invalid" class="error">
+        Event Date is required.
+      </div>
+
+      <label for="event-location">Event Location</label>
+      <input type="text" id="event-location" name="eventLocation" ngModel required>
+      <div *ngIf="eventForm.controls['eventLocation']?.touched && eventForm.controls['eventLocation'].invalid" class="error">
+        Event Location is required.
+      </div>
+
+      <label for="ticket-type">Ticket Type</label>
+      <select id="ticket-type" name="ticketType" ngModel required>
+        <option value="single">Single</option>
+        <option value="group">Group</option>
+      </select>
+      <div *ngIf="eventForm.controls['ticketType']?.touched && eventForm.controls['ticketType'].invalid" class="error">
+        Ticket Type is required.
+      </div>
+
+      <label for="event-picture">Event Picture</label>
+      <input type="file" id="event-picture" name="eventPicture" ngModel required>
+      <div *ngIf="eventForm.controls['eventPicture']?.touched && eventForm.controls['eventPicture'].invalid" class="error">
+        Event Picture is required.
+      </div>
+
+      <label for="event-price">Event Price</label>
+      <input type="number" id="event-price" name="eventPrice" ngModel required>
+      <div *ngIf="eventForm.controls['eventPrice']?.touched && eventForm.controls['eventPrice'].invalid" class="error">
+        Event Price is required.
+      </div>
+
+      <div class="modal-buttons">
+        <button type="submit" class="create-btn">Create</button>
+        <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
