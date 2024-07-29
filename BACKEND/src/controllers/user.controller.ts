@@ -21,8 +21,21 @@ export class UserController {
     try{
       let result = await UserService.fetchAllUsers()
 
-      return res.status(201).json(result)
+      return res.status(200).json(result)
     }catch (error) {
+      return res.json({
+        error
+      });
+    }
+  }
+
+  async getUsers(req: Request, res: Response){
+    try {
+      let result = await UserService.fetchUsers()
+
+      return res.status(200).json(result)
+      
+    } catch (error) {
       return res.json({
         error
       });
@@ -35,7 +48,7 @@ export class UserController {
       let response = await UserService.fetchSingleUser(user_id);
       console.log(response);
 
-      return res.status(201).json(response);
+      return res.status(200).json(response);
     } catch (error) {
       return res.json({
         error: "Error fetching user",
@@ -66,7 +79,7 @@ export class UserController {
       };
 
       let response = await UserService.updateUserDetails(email, password);
-      return res.status(200).json(response);
+      return res.status(201).json(response);
     } catch (error) {
       return res.json({
         error: error,
@@ -87,7 +100,7 @@ export class UserController {
             password
         }
         let response = await UserService.updateUserCredentials(user)
-        return res.status(200).json(response)
+        return res.status(201).json(response)
     } catch (error) {
         return res.json({
             error:error
@@ -95,17 +108,42 @@ export class UserController {
     }
 }
 
-async deleteUser(req: Request, res: Response){
+async deactivateUser(req: Request, res: Response) {
   try {
-    let {user_id} = req.params
+    let { user_id } = req.params;
 
-    let response = await UserService.deleteUser(user_id)
+    let response = await UserService.deactivateUser(user_id);
     return res.status(200).json(response);
 
   } catch (error) {
-      return res.json({
-        error: 'Error deleting user'
-    })
+    return res.status(500).json({
+      error: 'Error deactivating user'
+    });
   }
 }
+
+async activateUser(req: Request, res: Response) {
+  try {
+    let { user_id } = req.params;
+
+    let response = await UserService.activateUser(user_id);
+    return res.status(200).json(response);
+
+  } catch (error) {
+    return res.status(500).json({
+      error: 'Error activating user'
+    });
+  }
+}
+
+async getNumberOfUsers(req: Request, res: Response) {
+  try {
+      let result = await UserService.getNumberOfUsers();
+      return res.status(200).json(result);
+  } catch (error) {
+      return res.status(500).json({ error: 'Error fetching number of users' });
+  }
+}
+
+
 }

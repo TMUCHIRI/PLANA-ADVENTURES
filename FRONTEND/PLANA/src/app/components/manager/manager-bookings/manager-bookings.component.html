@@ -1,79 +1,55 @@
+<!-- src/app/components/manager-bookings/manager-bookings.component.html -->
 <div class="container">
-
-    <div class="navbar">
-  
-      <div class="logo">
-        <h3>PLANA</h3>
-        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-      </div>
-  
-      <div class="title">
-        <h3>BOOKINGS DASHBOARD</h3>
-      </div>
-  
+  <div class="navbar">
+    <div class="logo">
+      <h3>PLANA</h3>
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
     </div>
-  
-    <div class="bottom">
-  
-      <div class="header-text">
-        <h4>BOOKINGS</h4>
-      </div>
-
-      <div class="bookings-table">
-
-        <table>
-
-            <tr>
-                <th>Event</th>
-                <th>No. of bookings</th>
-                <th>Action</th>
-            </tr>
-
-            <tr>
-                <td>Factory opening</td>
-                <td>10</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Conference</td>
-                <td>5</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Annual event</td>
-                <td>8</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Birthday party</td>
-                <td>7</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Holiday celebration</td>
-                <td>6</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Festival</td>
-                <td>4</td>
-                <td><button>View bookings</button></td>
-            </tr>
-
-            <tr>
-                <td>Special event</td>
-                <td>3</td>
-                <td><button>View bookings</button></td>
-            </tr>
-        </table>
-      </div>
-  
-      
+    <div class="title">
+      <h3>BOOKINGS DASHBOARD</h3>
     </div>
   </div>
-    
+
+  <div class="bottom">
+    <div class="header-text">
+      <h4>BOOKINGS</h4>
+    </div>
+
+    <div class="bookings-table">
+      <table>
+        <tr>
+          <th>Event</th>
+          <th>No. of bookings</th>
+          <th>Action</th>
+        </tr>
+
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.event_title }}</td>
+          <td>{{ bookings.length }}</td>
+          <td><button (click)="viewBookings(booking.event_id)">View bookings</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div *ngIf="showModal" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Bookings for Event</h2>
+      <table *ngIf="eventBookings.length > 0">
+        <tr>
+          <th>Event Name</th>
+          <th>Username</th>
+          <th>Booking Date</th>
+        </tr>
+        <tr *ngFor="let booking of eventBookings">
+          <td>{{ booking.event_title }}</td>
+          <td>{{ booking.username }}</td>
+          <td>{{ booking.booking_date | date }}</td>
+        </tr>
+      </table>
+      <p *ngIf="eventBookings.length === 0">No bookings found for this event.</p>
+    </div>
+  </div>
+</div>

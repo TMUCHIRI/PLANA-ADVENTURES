@@ -1,0 +1,32 @@
+###CREATE A BOOKING
+POST http://localhost:5500/bookings/createBooking
+Content-Type: application/json
+
+{
+    "user_id": "bab77068-fe13-4ee4-ac2d-4236949fc3fd",
+    "event_id": "02ef0073-15da-49f2-bb61-7f6c7fd8c817"
+}
+
+
+###GET ALL BOOKINGS
+GET http://localhost:5500/bookings/getAllBookings
+Content-Type: application/json
+
+
+###GET BOOKINGS BY USER
+GET http://localhost:5500/bookings/users/5ddb34b6-083c-496a-9aca-9408cb9044a2
+Content-Type: application/json
+
+
+###GET BOOKINGS BY EVENT
+GET http://localhost:5500/bookings/events/02ef0073-15da-49f2-bb61-7f6c7fd8c817
+Content-Type: application/json
+
+###CANCEL BOOKING
+DELETE http://localhost:5500/bookings/cancelBooking/84f21bb8-6d39-4264-ad2f-b1e8137fe89e
+Content-Type: application/json
+
+
+###GET TOTAL REVENUE
+GET http://localhost:5500/bookings/book/revenue
+Content-Type: application/json

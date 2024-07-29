@@ -31,8 +31,15 @@ export class AuthService {
             const user = result.recordset[0];
             const role = user.role;
             const user_id = user.user_id;
+            const isActive = user.isActive;
+            const username = user.username;
+            console.log(username);
+            
             console.log(role);
             console.log(user_id);
+            console.log('isactive',isActive);
+            
+            
             
             
             
@@ -42,11 +49,19 @@ export class AuthService {
 
             // Compare the provided password with the hashed password
             const passwordMatch = bcrypt.compareSync(logins.password, hashedPassword);
-            console.log(passwordMatch);
+            console.log('passwordmatch',passwordMatch);
+
+            
             
 
             // If passwords match, generate a JWT token
             if (passwordMatch) {
+
+                if (!isActive) {
+                    return {
+                        message: 'Account is deactivated. Please contact your admin'
+                    };
+                }
                 const { email, ...rest } = result.recordset[0];
                 let token = jwt.sign(rest, process.env.SECRET_KEY as string, {
                     expiresIn: '2h'
@@ -56,6 +71,7 @@ export class AuthService {
                     message: 'Login successful',
                     role,
                     user_id,
+                    username,
                     token
                 };
             } else {

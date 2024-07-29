@@ -26,6 +26,6 @@ export class AdminSidebarComponent {
   logout() {
     // this.localstorageService.removeItem('user_id');
     // this.localstorageService.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'], { replaceUrl: true });
   }
 }

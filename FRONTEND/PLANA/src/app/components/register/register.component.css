@@ -47,6 +47,11 @@
     background-color: #25d6aa;
 }
 
+.home{
+    cursor: pointer;
+    color: blue;
+}
+
 .form .right-side{
     width: 50%;
     height: 100%;

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManagerEventsComponent } from './manager-events.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ManagerEventsComponent', () => {
   let component: ManagerEventsComponent;
@@ -8,7 +10,7 @@ describe('ManagerEventsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ManagerEventsComponent]
+      imports: [ManagerEventsComponent, RouterTestingModule, HttpClientTestingModule,]
     })
     .compileComponents();
 

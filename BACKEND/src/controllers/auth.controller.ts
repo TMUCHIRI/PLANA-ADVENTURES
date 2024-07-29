@@ -8,7 +8,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
-        const logins: login_details = { email, password };
+        const logins: login_details = { email, password, isActive: true };
 
         const result = await authServiceInstance.login(logins);
 

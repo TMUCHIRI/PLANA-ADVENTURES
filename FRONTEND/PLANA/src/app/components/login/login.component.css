@@ -34,6 +34,11 @@
     border-bottom-left-radius: 10px;
 } */
 
+.home{
+    cursor: pointer;
+    color: blue;
+}
+
 .form .left-side{
     background: url(../asset/Man-holding-login-form-as-a-login-here-on-transparent-background-PNG.png);
     background-position: center;

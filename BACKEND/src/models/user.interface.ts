@@ -7,5 +7,6 @@ export interface UserDetails{
 
 export interface login_details{
     email: string,
-    password: string
+    password: string,
+    isActive: boolean
 }

@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
-import { RegisterComponent } from '../register/register.component';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service'; 
+import { TokenDetails } from '../interfaces/users';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RegisterComponent, RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, RegisterComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
+  
   user = {
     email: '',
     password: ''
@@ -20,7 +23,8 @@ export class LoginComponent {
 
   errorMessages = {
     email: '',
-    password: ''
+    password: '',
+    general: ''
   };
 
   loginSuccess: boolean = false;
@@ -32,14 +36,26 @@ export class LoginComponent {
       this.errorMessages.password = this.getPasswordErrorMessage(form.controls['password']);
       this.setErrorTimeout();
       return;
-    }else{
-      this.loginSuccess = true;
-      setTimeout(()=> {
-        this.router.navigate(['/user-dashboard'])
-      }, 3000)
     }
 
-    // Login logic here
+    this.authService.login(this.user.email, this.user.password).subscribe(
+      (response: TokenDetails) => {
+        if (response.message === 'Login successful') {
+          this.loginSuccess = true;
+          this.successMessage = response.message;
+          setTimeout(() => {
+            this.navigateBasedOnRole(response.role || 'user');
+          }, 3000);
+        } else {
+          this.errorMessages.general = response.message || 'Login failed. Please try again.';
+          this.setErrorTimeout();
+        }
+      },
+      (error) => {
+        this.errorMessages.general = 'Server error. Please try again later.';
+        this.setErrorTimeout();
+      }
+    );
   }
 
   getEmailErrorMessage(control: any): string {
@@ -59,10 +75,26 @@ export class LoginComponent {
     return '';
   }
 
+  navigateBasedOnRole(role: string) {
+    switch (role) {
+      case 'manager':
+        this.router.navigate(['/manager']);
+        break;
+      case 'admin':
+        this.router.navigate(['/admin']);
+        break;
+      case 'user':
+      default:
+        this.router.navigate(['/user-dashboard']);
+        break;
+    }
+  }
+
   setErrorTimeout() {
     setTimeout(() => {
-      this.errorMessages.email = ''
-      this.errorMessages.password = ''
+      this.errorMessages.email = '';
+      this.errorMessages.password = '';
+      this.errorMessages.general = '';
     }, 2000);
   }
 }

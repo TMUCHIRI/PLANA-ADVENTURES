@@ -3,7 +3,6 @@ import { LandingComponent } from './components/landing/landing.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
-import { EventDetailsComponent } from './components/event-details/event-details.component';
 import { UserBookingsComponent } from './components/user-bookings/user-bookings.component';
 import { ManagerSidebarComponent } from './components/manager/manager-sidebar/manager-sidebar.component';
 import { ManagerDashboardComponent } from './components/manager/manager-dashboard/manager-dashboard.component';
@@ -24,7 +23,6 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'user-dashboard', component: UserDashboardComponent},
-    {path:'event-details', component: EventDetailsComponent},
     {path: 'user-bookings', component: UserBookingsComponent},
 
     {path: 'user-profile', component: UserProfileComponent},

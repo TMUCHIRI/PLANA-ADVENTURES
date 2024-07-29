@@ -62,6 +62,13 @@
     
         <button type="submit" [disabled]="profileForm.invalid">Submit</button>
       </form>
+
+      <div *ngIf="successMessage" class="success">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
     </div>
     
     
