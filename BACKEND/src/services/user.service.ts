@@ -264,5 +264,21 @@ async getNumberOfUsers() {
   }
 }
 
+async getUserRolesCount() {
+  try {
+      let pool = await mssql.connect(sqlconfig);
+      let result = await pool.request().execute('getUserRolesCount');
+      let roleCounts = result.recordset.reduce((acc, row) => {
+          acc[`User Role: ${row.userRole}`] = row.roleCount;
+          return acc;
+      }, {});
+      return roleCounts;
+  } catch (error) {
+      console.error('SQL error', error);
+      throw error;
+  }
+}
+
+
 
 }

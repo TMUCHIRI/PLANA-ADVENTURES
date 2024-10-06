@@ -145,5 +145,15 @@ async getNumberOfUsers(req: Request, res: Response) {
   }
 }
 
+async getUserRolesCount(req: Request, res: Response) {
+  try {
+      let result = await UserService.getUserRolesCount();
+      return res.status(200).json(result);
+  } catch (error) {
+      return res.status(500).json({ error: 'Error fetching user roles count' });
+  }
+}
+
+
 
 }

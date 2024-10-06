@@ -85,16 +85,18 @@
     align-items: center;
     border-radius: 10px;
     background-color: #36C2CE;
+    gap: 10px;
 }
 
-.card h5 {
-    font-size: 15px;
-    color: white;
+.card i {
+    font-size: 20px;
+    color: black;
 }
 
 .card p {
     font-size: 15px;
     color: white;
+    font-weight: 400;
 }
 
 /* Styling for the charts */

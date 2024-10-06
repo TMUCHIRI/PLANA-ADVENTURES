@@ -15,6 +15,10 @@ export class AdminDashboardService {
     return this.http.get<any>(`${this.baseUrl}/users/user/countUsers`);
   }
 
+  getUserCountRole(): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/users/user/countUserRole`);
+  }
+
   getEventCount(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/events/event/numberOfEvents`);
   }

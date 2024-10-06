@@ -19,6 +19,7 @@ export class AdminDashboardComponent implements OnInit {
   userChartData: any;
   eventChartData: any;
   revenueChartData: any;
+  userRolesData: any;
 
   constructor(private adminDashboardService: AdminDashboardService) {}
 
@@ -56,6 +57,15 @@ export class AdminDashboardComponent implements OnInit {
         console.error('Error fetching total revenue:', error);
       }
     );
+
+    this.adminDashboardService.getUserCountRole().subscribe(
+      (response) => {
+        this.updateUserRolesChart(response);
+      },
+      (error) => {
+        console.error('Error fetching user roles count:', error);
+      }
+    );
   }
 
   updateUserChart() {
@@ -67,6 +77,23 @@ export class AdminDashboardComponent implements OnInit {
           backgroundColor: '#42A5F5',
           borderColor: '#1E88E5',
           data: [this.numberOfUsers]
+        }
+      ]
+    };
+  }
+
+  updateUserRolesChart(data: any) {
+    const roles = Object.keys(data); // Extract roles, e.g., ['user', 'manager']
+    const counts = Object.values(data); // Extract counts, e.g., [5, 2]
+
+    // Update pie chart data
+    this.userRolesData = {
+      labels: roles,
+      datasets: [
+        {
+          data: counts,
+          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'], // Colors for different roles
+          hoverBackgroundColor: ['#64B5F6', '#81C784', '#FFB74D']
         }
       ]
     };
@@ -100,3 +127,4 @@ export class AdminDashboardComponent implements OnInit {
     };
   }
 }
+

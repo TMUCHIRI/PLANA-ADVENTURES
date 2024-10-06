@@ -9,3 +9,13 @@ CREATE TABLE Bookings (
 );
 
 SELECT * FROM Bookings
+
+
+ALTER TABLE Bookings
+DROP CONSTRAINT FK__Bookings__event___47DBAE45;
+
+
+ALTER TABLE Bookings
+ADD CONSTRAINT FK_Bookings_Events FOREIGN KEY (event_id)
+REFERENCES Events(event_id) ON DELETE CASCADE;
+

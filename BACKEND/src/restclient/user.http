@@ -3,9 +3,9 @@ POST http://localhost:5500/users/register
 Content-Type: application/json
 
 {
-    "username": "Daniel",
-    "email": "gamesmy177@gmail.com",
-    "password": "password"
+    "username": "admin",
+    "email": "admintim@example.com",
+    "password": "tim12345"
 }
 
 ###LOGIN USER
@@ -13,8 +13,8 @@ POST http://localhost:5500/users/login
 Content-Type: application/json
 
 {
-    "email": "gamesmy177@gmail.com",
-    "password": "password"
+    "email": "admin@example.com",
+    "password": "tim"
 }
 
 
@@ -39,12 +39,12 @@ PUT http://localhost:5500/users/switch-role
 Content-Type: application/json
 
 {
-    "user_id":"755d3da7-7fff-4ef0-bc7a-6104ada12c6b"
+    "user_id":"fa4957fa-17cd-40e5-8568-0b9660afa1f6"
 }
 
 
 ###CHANGE USER PASSWORD
-PUT http://localhost:5500/users/muchiri254timoth@gmail.com
+PUT http://localhost:5500/users/admin@example.com
 Content-Type: application/json
 
 {
@@ -61,4 +61,8 @@ PUT http://localhost:5500/users/activate/64f849bf-cfef-4f9b-9577-b2f894d8e77c
 
 ###GET THE NUMBER OF USERS
 GET http://localhost:5500/users/user/countUsers
+Content-Type: application/json
+
+###GET NUMBER OF USERS IN ROLES
+GET http://localhost:5500/users/user/countUserRole
 Content-Type: application/json

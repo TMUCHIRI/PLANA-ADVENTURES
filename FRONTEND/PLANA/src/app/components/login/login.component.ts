@@ -78,10 +78,10 @@ export class LoginComponent {
   navigateBasedOnRole(role: string) {
     switch (role) {
       case 'manager':
-        this.router.navigate(['/manager']);
+        this.router.navigate(['/manager/manager-home']);
         break;
       case 'admin':
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/admin-home']);
         break;
       case 'user':
       default:

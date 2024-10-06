@@ -17,22 +17,22 @@
 
     <div class="analysis">
       <div class="card">
-        <h5>USERS</h5>
+        <i class="fa fa-users" aria-hidden="true"></i>
         <p>{{ numberOfUsers }}</p>
       </div>
       <div class="card">
-        <h5>EVENTS</h5>
+        <i class="fa fa-calendar" aria-hidden="true"></i>
         <p>{{ numberOfEvents }}</p>
       </div>
       <div class="card">
-        <h5>REVENUE</h5>
+        <i class="fa-solid fa-money-bill-wave"></i>
         <p>KSH {{ totalRevenue }}</p>
       </div>
     </div>
 
     <div class="charts">
       <div class="chart-container">
-        <p-chart type="pie" [data]="userChartData"></p-chart>
+        <p-chart type="pie" [data]="userRolesData"></p-chart>
       </div>
   
       <div class="chart-container">

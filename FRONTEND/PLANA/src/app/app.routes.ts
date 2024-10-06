@@ -17,23 +17,24 @@ import { AdminEventsComponent } from './components/admin/admin-events/admin-even
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {path:'', component: LandingComponent},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'user-dashboard', component: UserDashboardComponent},
-    {path: 'user-bookings', component: UserBookingsComponent},
+    {path: 'user-dashboard', component: UserDashboardComponent, canActivate: [AuthGuard]},
+    {path: 'user-bookings', component: UserBookingsComponent, canActivate: [AuthGuard]},
 
-    {path: 'user-profile', component: UserProfileComponent},
+    {path: 'user-profile', component: UserProfileComponent, canActivate: [AuthGuard]},
     {
         path: 'manager', component: ManagerComponent,
         children: [
-            {path: 'manager-home', component: ManagerDashboardComponent},
-            {path: 'manager-events', component: ManagerEventsComponent},
-            {path: 'manager-users', component: ManagerUsersComponent},
-            {path: 'manager-bookings', component: ManagerBookingsComponent},
-            {path: 'manager-profile', component: ManagerProfileComponent}
+            {path: 'manager-home', component: ManagerDashboardComponent, canActivate: [AuthGuard]},
+            {path: 'manager-events', component: ManagerEventsComponent, canActivate: [AuthGuard]},
+            {path: 'manager-users', component: ManagerUsersComponent, canActivate: [AuthGuard]},
+            {path: 'manager-bookings', component: ManagerBookingsComponent, canActivate: [AuthGuard]},
+            {path: 'manager-profile', component: ManagerProfileComponent, canActivate: [AuthGuard]}
         ]
         
     },
@@ -41,10 +42,10 @@ export const routes: Routes = [
     {
         path: 'admin', component: AdminComponent,
         children: [
-            {path: 'admin-home', component: AdminDashboardComponent},
-            {path: 'admin-events', component: AdminEventsComponent},
-            {path: 'admin-users', component: AdminUsersComponent},
-            {path: 'admin-profile', component: AdminProfileComponent}
+            {path: 'admin-home', component: AdminDashboardComponent, canActivate: [AuthGuard]},
+            {path: 'admin-events', component: AdminEventsComponent, canActivate: [AuthGuard]},
+            {path: 'admin-users', component: AdminUsersComponent, canActivate: [AuthGuard]},
+            {path: 'admin-profile', component: AdminProfileComponent, canActivate: [AuthGuard]}
         ]
     }
 ];

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SidebarService } from '../../../services/sidebar.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
 export class AdminSidebarComponent {
   isActive: boolean = false;
 
-  constructor(private sidebarService: SidebarService, private router: Router) {
+  constructor(private sidebarService: SidebarService, private authService: AuthService, private router: Router) {
     this.sidebarService.sidebarActive$.subscribe((isActive) => {
       this.isActive = isActive;
     });
@@ -26,6 +27,7 @@ export class AdminSidebarComponent {
   logout() {
     // this.localstorageService.removeItem('user_id');
     // this.localstorageService.removeItem('token');
+    this.authService.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
   }
 }
