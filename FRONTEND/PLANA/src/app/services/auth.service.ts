@@ -125,7 +125,7 @@ export class AuthService {
 
   fetchAllBookings(){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.get<{ bookings: BookingDetails[] }>(`${this.baseUrl}/bookings/getAllBookings`, { headers })
+    return this.http.get<{ events: events[] }>(`${this.baseUrl}/bookings/getAllBookings`, { headers })
       
   }
 

@@ -23,6 +23,8 @@
         <th>Location</th>
         <th>Ticket Type</th>
         <th>Price</th>
+        <th>Total Tickets</th>
+        <th>Available Tickets</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -33,6 +35,8 @@
         <td>{{ event.location }}</td>
         <td>{{ event.ticket_type }}</td>
         <td> Ksh {{ event.price }}</td>
+        <td>{{event.total_tickets}}</td>
+        <td>{{event.available_tickets}}</td>
         <td>{{ event.isApproved ? 'Approved' : 'Pending' }}</td>
         <td class="btns">
           <button class="cancel-btn" (click)="onDelete(event.event_id)">Cancel</button>
@@ -126,6 +130,19 @@
       >
       <div *ngIf="eventForm.controls['price']?.touched && eventForm.controls['price'].invalid" class="error">
         Event Price is required.
+      </div>
+
+      <label for="total-tickets">Total Tickets</label>
+      <input 
+        type="number" 
+        id="total-tickets" 
+        name="total_tickets" 
+        ngModel 
+        required
+        [value]="selectedEvent?.total_tickets"
+      >
+      <div *ngIf="eventForm.controls['total_tickets']?.touched && eventForm.controls['total_tickets'].invalid" class="error">
+        Ticket amount is required.
       </div>
 
       <label for="event-image">Event Image</label>

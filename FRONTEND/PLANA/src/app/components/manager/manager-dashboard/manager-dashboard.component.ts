@@ -67,7 +67,7 @@ export class ManagerDashboardComponent implements OnInit {
 
     this.adminDashboardService.getAllBookings().subscribe(
       response => {
-        this.bookingCount = response.bookings.length;
+        this.bookingCount = response.events.length;
         this.bookingChartData = {
           labels: ['Bookings'],
           datasets: [

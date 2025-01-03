@@ -1,13 +1,33 @@
 <div class="main">
+
+  <div class="brand">
+    <p>PLANA</p>
+        <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+  </div>
+
   <div class="container">
     <div *ngIf="updateSuccess" class="success">
       {{ successMessage }}
     </div>
+
+    <!-- User Details Section -->
+    <div class="user-details">
+      <div class="profile-icon">
+        <i class="fa fa-user"></i>
+      </div>
+      <div class="user-info">
+        <p>Username: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Account Status: {{ accountStatus }}</p>
+      </div>
+    </div>
+
+    <!-- Profile Update Form Section -->
     <div class="form">
       <div class="form-header">
         <h3>Update Profile</h3>
       </div>
-      
+
       <form #userProfileForm="ngForm" (ngSubmit)="onSubmit(userProfileForm)">
         <div class="inputs">
           <input
@@ -15,19 +35,14 @@
             name="email"
             placeholder="Email"
             [(ngModel)]="user.email"
-            required
-            email
+            readonly
             #email="ngModel"
           />
-          <div *ngIf="showErrorMessages && email.invalid && email.touched" class="error">
-            <div *ngIf="email.errors?.['required']">Email is required.</div>
-            <div *ngIf="email.errors?.['email']">Invalid email address.</div>
-          </div>
 
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="New Password"
             [(ngModel)]="user.password"
             required
             minlength="6"
@@ -44,6 +59,7 @@
         </div>
       </form>
     </div>
+
     <div *ngIf="error" class="error">
       {{ error }}
     </div>

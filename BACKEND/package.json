@@ -22,7 +22,9 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "mssql": "^11.0.1",
-    "nodemon": "^3.1.4"
+    "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.4",
+    "pdfkit": "^0.15.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -32,6 +34,8 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash": "^4.17.7",
     "@types/mssql": "^9.1.5",
+    "@types/nodemailer": "^6.4.16",
+    "@types/pdfkit": "^0.13.5",
     "@types/uuid": "^10.0.0"
   }
 }

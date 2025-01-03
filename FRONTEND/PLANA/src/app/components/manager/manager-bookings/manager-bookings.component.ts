@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { BookingDetails } from '../../interfaces/bookingdetails';
 import { CommonModule } from '@angular/common';
-
+import { events } from '../../interfaces/events';
 @Component({
   selector: 'app-manager-bookings',
   standalone: true,
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./manager-bookings.component.css']
 })
 export class ManagerBookingsComponent implements OnInit {
-  bookings: BookingDetails[] = [];
+  bookings: events[] = [];
   selectedEventId: string | null = null;
   eventBookings: BookingDetails[] = [];
   showModal: boolean = false;
@@ -26,7 +26,9 @@ export class ManagerBookingsComponent implements OnInit {
   loadBookings(): void {
     this.authService.fetchAllBookings().subscribe(
       response => {
-        this.bookings = response.bookings;
+        console.log("result from backend:", response);
+        
+        this.bookings = response.events;
       },
       error => {
         console.error('Error loading bookings', error);
@@ -35,21 +37,16 @@ export class ManagerBookingsComponent implements OnInit {
   }
 
   viewBookings(eventId: string): void {
-    this.selectedEventId = eventId;
-    this.authService.fetchBookingsByEvent(eventId).subscribe(
-      response => {
-        if (response.bookingsByEvent.length > 0) {
-          this.eventBookings = response.bookingsByEvent;
-        } else {
-          this.eventBookings = [];
-          alert('No bookings found for this event');
-        }
-        this.showModal = true;
-      },
-      error => {
-        console.error('Error fetching bookings for event', error);
-      }
-    );
+    const event = this.bookings.find(event => event.event_id === eventId);
+    if (event && event.bookings.length > 0) {
+      this.eventBookings = event.bookings; // Access the bookings for the selected event
+      console.log('Bookings for event:', this.eventBookings);
+      
+      this.showModal = true;
+    } else {
+      alert('No bookings found for this event');
+      this.eventBookings = [];
+    }
   }
 
   closeModal(): void {

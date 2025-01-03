@@ -116,6 +116,7 @@
     height: 80%;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
   }
   
@@ -198,6 +199,9 @@
   }
 
   .error-message {
-    background-color: #f44336;
-    color: white;
+    color: red;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
   }
+  

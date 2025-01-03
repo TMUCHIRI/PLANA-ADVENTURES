@@ -6,5 +6,7 @@ export interface Event {
     location: string;
     ticket_type: string;
     price: number;
-    image: string
+    image: string;
+    total_tickets: number;
+    available_tickets: number;
 }

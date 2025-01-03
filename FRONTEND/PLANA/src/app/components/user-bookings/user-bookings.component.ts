@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 export class UserBookingsComponent implements OnInit {
   bookings: BookingDetails[] = [];
   events: events[] = [];
+  cancelBook: string = ''
 
   constructor(private authService: AuthService) {}
 
@@ -48,6 +49,10 @@ export class UserBookingsComponent implements OnInit {
   cancelBooking(bookingId: string) {
     this.authService.cancelBooking(bookingId).subscribe(
       (response) => {
+        this.cancelBook = response.message;
+        setTimeout(() => {
+          this.cancelBook = '';
+        }, 3000);
         console.log(response.message);
         this.loadBookings(); // Reload bookings after cancelation
       },

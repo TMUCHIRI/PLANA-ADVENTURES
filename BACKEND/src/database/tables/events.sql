@@ -6,3 +6,13 @@ ALTER TABLE Events ADD isApproved BIT DEFAULT (0) NOT NULL;
 ALTER TABLE Events ADD image VARCHAR(255) NOT NULL;
 
 SELECT * FROM Events
+
+ALTER TABLE Events ADD total_tickets INT NOT NULL;  -- Total slots for the event
+ALTER TABLE Events ADD available_tickets INT NOT NULL; -- Remaining slots for the event
+
+SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'Events' AND COLUMN_NAME = 'total_tickets';
+
+
+

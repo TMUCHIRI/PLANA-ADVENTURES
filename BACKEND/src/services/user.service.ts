@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import bcrypt from "bcrypt";
 import lodash from "lodash";
 import { UserDetails } from "../models/user.interface";
-import { sqlconfig } from "../config/sql.config"
+import { sqlconfig } from "../config/sql.config";
 
 export class userService {
   async registerUser(user: UserDetails) {

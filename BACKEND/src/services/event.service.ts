@@ -7,7 +7,7 @@ export class EventService {
     async createEvent(event: Event) {
         let pool = await mssql.connect(sqlconfig);
         let eventId = uuidv4();
-
+    
         let result = await (await pool.request()
             .input('event_id', eventId)
             .input('title', mssql.VarChar, event.title)
@@ -17,23 +17,29 @@ export class EventService {
             .input('ticket_type', mssql.VarChar, event.ticket_type)
             .input('price', mssql.Float, event.price)
             .input('image', mssql.VarChar, event.image)
+            .input('total_tickets', mssql.Int, event.total_tickets)
+            .input('available_tickets', mssql.Int, event.total_tickets)
             .execute('createEvent')).rowsAffected;
 
+            console.log("database result:", result);
+            console.log("total tickets:", event.total_tickets);
+            
+            
+    
         if (result[0] == 1) {
-            return {
-                message: 'Event created successfully'
-            };
+            return { message: 'Event created successfully' };
         } else {
-            return {
-                message: 'Error creating event'
-            };
+            return { message: 'Error creating event' };
         }
     }
+    
 
     async viewAllEvents() {
         let pool = await mssql.connect(sqlconfig);
         let result = (await pool.query(`SELECT * FROM Events`)).recordset;
 
+        console.log("database result:", result);
+        
         if (result.length == 0) {
             return {
                 message: 'No events found'
@@ -79,6 +85,8 @@ export class EventService {
                 .input('ticket_type', event.ticket_type)
                 .input('price', event.price)
                 .input('image', event.image)
+                .input('total_tickets', event.total_tickets)
+                .input('available_tickets', event.total_tickets)
                 .execute('updateEvent')).rowsAffected;
 
             if (result[0] < 1) {

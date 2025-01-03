@@ -35,6 +35,7 @@
             <p>Ticket-type: {{ event.ticket_type }}</p>
             <p>Date: {{ event.date | date }}</p>
             <p>Price: Ksh {{ event.price }}</p>
+            <p>Available Tickets: {{event.available_tickets}}</p>
             <button (click)="bookEvent(event.event_id)">Book Event</button>
           </div>
         </div>

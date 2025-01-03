@@ -138,3 +138,15 @@
     color: black;
   }
   
+  .cancelBook{
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #42df71;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }

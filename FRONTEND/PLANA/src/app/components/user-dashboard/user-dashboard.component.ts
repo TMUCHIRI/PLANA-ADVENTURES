@@ -44,24 +44,30 @@ export class UserDashboardComponent implements OnInit {
   bookEvent(eventId: string) {
     const userId = localStorage.getItem('userId');
     if (userId) {
-      this.authService.createBooking(userId, eventId).subscribe(response => {
-        if (response.message === 'Booking created successfully') {
-          this.bookingMessage = response.message;
+      this.authService.createBooking(userId, eventId).subscribe(
+        response => {
+          if (response.message === 'Booking created successfully') {
+            this.bookingMessage = response.message;
+            setTimeout(() => {
+              this.bookingMessage = '';
+              this.router.navigate(['/user-bookings']);
+            }, 3000);
+          }
+        },
+        error => {
+          if (error.error === 'Booking already exists') {
+            this.bookingError = 'You have already booked this event.';
+          } else if (error.error === 'Event is fully booked') {
+            this.bookingError = 'Sorry, this event is fully booked.';
+          } else {
+            console.error('Error creating booking', error);
+            this.bookingError = 'Booking already exists';
+          }
           setTimeout(() => {
-            this.bookingMessage = '';
-            this.router.navigate(['/user-bookings']);
+            this.bookingError = '';
           }, 3000);
         }
-      }, error => {
-        if (error.error === 'Booking already exists') {
-          this.bookingError = 'You have already booked this event.';
-        } else {
-          console.error('Error creating booking', error);
-        }
-        setTimeout(() => {
-          this.bookingError = '';
-        }, 3000);
-      });
+      );
     } else {
       alert('User not logged in');
     }

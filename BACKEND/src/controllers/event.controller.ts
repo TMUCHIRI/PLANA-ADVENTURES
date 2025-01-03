@@ -7,6 +7,9 @@ export class EventController {
     async createEvent(req: Request, res: Response) {
         try {
             let result = await eventService.createEvent(req.body);
+            console.log("Request body:", req.body);
+            console.log("Controller result:", result);
+            
             return res.status(201).json(result);
         } catch (error) {
             return res.json({
@@ -41,7 +44,7 @@ export class EventController {
     async updateEvent(req: Request, res: Response) {
         try {
             let event_id = req.params.event_id;
-            let { title, description, date, location, ticket_type, price, image } = req.body;
+            let { title, description, date, location, ticket_type, price, image, total_tickets, available_tickets } = req.body;
 
             let event = {
                 event_id: event_id,
@@ -51,7 +54,9 @@ export class EventController {
                 location,
                 ticket_type,
                 price,
-                image
+                image,
+                total_tickets,
+                available_tickets
             };
             let response = await eventService.updateEvent(event);
             return res.status(200).json(response);

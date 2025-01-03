@@ -1,7 +1,8 @@
 import mssql from 'mssql';
 import { v4 } from 'uuid';
 import { sqlconfig } from '../config/sql.config';
-import { booking } from '../models/booking.interface';
+import { booking, EventBookings } from '../models/booking.interface';
+
 import lodash from 'lodash';
 
 export class BookingService {
@@ -9,42 +10,32 @@ export class BookingService {
         try {
             let pool = await mssql.connect(sqlconfig);
             let booking_id = v4();
-
-            let isBooked = (await pool.request()
-                .input('user_id', mssql.VarChar, booking.user_id)
+    
+            // Check available tickets
+            let availableTicketsResult = await pool.request()
                 .input('event_id', mssql.VarChar, booking.event_id)
-                .query(`SELECT * FROM Bookings WHERE user_id = @user_id AND event_id = @event_id`)
-            ).recordset;
-
-            if (!lodash.isEmpty(isBooked)) {
-                return {
-                    error: 'Booking already exists'
-                };
-            }
-
-            let result = (await pool.request()
-                .input('booking_id', mssql.VarChar, booking_id)
-                .input('user_id', mssql.VarChar, booking.user_id)
-                .input('event_id', mssql.VarChar, booking.event_id)
-                .execute('bookEvent')).recordset;
-
-            if (result.length === 0) {
-                return {
-                    error: 'Booking not created'
-                };
+                .query(`SELECT available_tickets FROM Events WHERE event_id = @event_id`);
+    
+            if (availableTicketsResult.recordset[0].available_tickets > 0) {
+                // Proceed with booking
+                let result = await pool.request()
+                    .input('booking_id', mssql.VarChar, booking_id)
+                    .input('user_id', mssql.VarChar, booking.user_id)
+                    .input('event_id', mssql.VarChar, booking.event_id)
+                    .execute('bookEvent');
+    
+                return { message: 'Booking created successfully', ticket: result.recordset[0] };
             } else {
-                return {
-                    message: 'Booking created successfully',
-                    bookingDetails: result[0]
-                };
+                return { error: 'Event is fully booked' };
             }
         } catch (error) {
             console.error('SQL error', error);
             throw error;
         }
     }
+    
 
-    async getAllBookings() {
+    async getAllBookings(): Promise<{ events: EventBookings[] }> {
         try {
             let pool = await mssql.connect(sqlconfig);
             let result = await pool.request().query(`
@@ -56,7 +47,7 @@ export class BookingService {
                     e.title as event_title,
                     e.ticket_type as ticket_type,
                     e.isApproved as isApproved, 
-                    b.booking_date 
+                    b.booking_date
                 FROM 
                     Bookings b
                 JOIN 
@@ -64,8 +55,40 @@ export class BookingService {
                 JOIN 
                     Events e ON b.event_id = e.event_id;
             `);
+
+            let bookings = result.recordset;
+
+            // Group bookings by event_id
+            const groupedBookings: { [key: string]: EventBookings } = bookings.reduce((events: { [key: string]: EventBookings }, booking: any) => {
+                const eventId = booking.event_id;
+
+                if (!events[eventId]) {
+                    // Initialize the event entry if it doesn't exist
+                    events[eventId] = {
+                        event_id: booking.event_id,
+                        event_title: booking.event_title,
+                        ticket_type: booking.ticket_type,
+                        isApproved: booking.isApproved,
+                        bookings: []  // Create an empty array to hold bookings for this event
+                    };
+                }
+
+                // Add the booking to the corresponding event
+                events[eventId].bookings.push({
+                    booking_id: booking.booking_id,
+                    user_id: booking.user_id,
+                    username: booking.username,
+                    booking_date: booking.booking_date
+                });
+
+                return events;
+            }, {});
+
+            // Convert the object of events into an array
+            const resultArray: EventBookings[] = Object.values(groupedBookings);
+
             return {
-                bookings: result.recordset
+                events: resultArray
             };
         } catch (error) {
             console.error('SQL error', error);
