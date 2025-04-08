@@ -173,7 +173,7 @@ export class userService {
 
     let userExists = await(await pool.request().query(`SELECT * FROM Users WHERE user_id ='${user.user_id}'`)).recordset
 
-    console.log(userExists);
+    // console.log(userExists);.
 
     if(lodash.isEmpty(userExists)){
         return{

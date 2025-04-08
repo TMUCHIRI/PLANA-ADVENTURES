@@ -4,6 +4,7 @@ import user_router from './routers/user.router';
 import cors from 'cors'
 import event_router from './routers/event.router';
 import booking_router from './routers/booking.router';
+import issuesRouter from './routers/issues.router';
 
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(cors())
 app.use('/users', user_router);
 app.use('/events', event_router);
 app.use('/bookings', booking_router);
+app.use('/issues', issuesRouter);
 
 
 app.use((err:Error, req:Request, res:Response, next:NextFunction)=>{

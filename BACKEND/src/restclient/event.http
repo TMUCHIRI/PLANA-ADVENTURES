@@ -21,7 +21,7 @@ Content-Type: application/json
 GET http://localhost:5500/events/722daeb4-b0b8-4a88-ad04-2406ecc58246
 
 ###UPDATE EVENT
-PUT http://localhost:5500/events/99edf5fb-2e51-46e1-b0ec-4f0f4f03321d
+PUT http://localhost:5500/events/update-event/99edf5fb-2e51-46e1-b0ec-4f0f4f03321d
 Content-Type: application/json
 
 {

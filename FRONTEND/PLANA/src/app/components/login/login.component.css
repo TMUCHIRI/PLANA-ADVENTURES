@@ -119,6 +119,11 @@
     cursor: pointer;
 }
 
+.right-side .btns button:disabled{
+    background: #ccc;
+    cursor: not-allowed;
+}
+
 .right-side .register{
     text-decoration: none;
 }

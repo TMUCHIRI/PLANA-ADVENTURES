@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { events } from '../interfaces/events';
-import { EventsService } from '../../services/events.service';
+import { EventsService, Event } from '../../services/events.service'; // Import Event
 import { CommonModule } from '@angular/common';
+import { IssuesService } from '../../services/issues.service';
+import { Issue } from '../interfaces/issues';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
   imports: [RouterLink, NavbarComponent, CommonModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.css'
+  styleUrls: ['./landing.component.css']
 })
-export class LandingComponent {
-  events: events[] = [];
-  loginMessage: string = ''
+export class LandingComponent implements OnInit {
+  events: Event[] = []; // Use Event instead of events
+  issues: Issue[] = [];
+  loginMessage: string = '';
 
-  constructor(private eventsService: EventsService, private router: Router) {}
+  constructor(
+    private eventsService: EventsService,
+    private issuesService: IssuesService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchEvents();
+    this.fetchIssues();
   }
 
   fetchEvents(): void {
@@ -28,10 +35,16 @@ export class LandingComponent {
     });
   }
 
+  fetchIssues(): void {
+    this.issuesService.getAllIssues().subscribe((response) => {
+      this.issues = response.issues.slice(0, 3); // Limit to 3 for landing page
+    });
+  }
+
   bookEvent(eventId: string): void {
-    this.loginMessage = 'Redirecting to login page'
+    this.loginMessage = 'Redirecting to login page';
     setTimeout(() => {
-      this.loginMessage = ''
+      this.loginMessage = '';
       this.router.navigate(['/login']);
     }, 3000);
   }

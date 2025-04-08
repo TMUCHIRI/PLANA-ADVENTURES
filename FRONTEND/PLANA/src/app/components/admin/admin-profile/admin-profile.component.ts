@@ -1,4 +1,3 @@
-// src/app/components/admin-profile/admin-profile.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';

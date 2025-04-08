@@ -66,40 +66,48 @@ export class EventService {
         }
     }
 
-    async updateEvent(event: Event) {
-        let pool = await mssql.connect(sqlconfig);
-
-        let eventExists = (await pool.request().query(`SELECT * FROM Events WHERE event_id = '${event.event_id}'`)).recordset;
-
-        if (eventExists.length === 0) {
-            return {
-                error: 'Event not found'
-            };
-        } else {
-            let result = (await pool.request()
-                .input('event_id', event.event_id)
-                .input('title', event.title)
-                .input('description', event.description)
-                .input('date', event.date)
-                .input('location', event.location)
-                .input('ticket_type', event.ticket_type)
-                .input('price', event.price)
-                .input('image', event.image)
-                .input('total_tickets', event.total_tickets)
-                .input('available_tickets', event.total_tickets)
-                .execute('updateEvent')).rowsAffected;
-
-            if (result[0] < 1) {
-                return {
-                    error: "Unable to update event details"
-                };
-            } else {
-                return {
-                    message: "Event details updated successfully"
-                };
-            }
+    async updateEvent(event: Event): Promise<{ message?: string; error?: string }> {
+        try {
+          let pool = await mssql.connect(sqlconfig);
+    
+          // Check if event exists
+          let eventExists = await pool
+            .request()
+            .input('event_id', mssql.VarChar(255), event.event_id)
+            .query('SELECT * FROM Events WHERE event_id = @event_id');
+    
+          if (eventExists.recordset.length === 0) {
+            return { error: 'Event not found' };
+          }
+    
+          console.log('Updating event with payload:', event);
+    
+          // Update event with 10 parameters matching the stored procedure
+          let result = await pool
+            .request()
+            .input('event_id', mssql.VarChar(255), event.event_id)
+            .input('title', mssql.VarChar(255), event.title)
+            .input('description', mssql.VarChar(255), event.description)
+            .input('date', mssql.DateTime, new Date(event.date))
+            .input('location', mssql.VarChar(255), event.location)
+            .input('ticket_type', mssql.VarChar(255), event.ticket_type)
+            .input('price', mssql.Float, event.price)
+            .input('image', mssql.VarChar(255), event.image)
+            .input('total_tickets', mssql.Int, event.total_tickets)
+            .input('available_tickets', mssql.Int, event.available_tickets)
+            .execute('updateEvent');
+    
+          if (result.rowsAffected[0] < 1) {
+            console.log('No rows affected for event_id:', event.event_id);
+            return { error: 'Unable to update event details - no changes applied' };
+          }
+    
+          return { message: 'Event details updated successfully' };
+        } catch (error) {
+          console.error('Update Event Error:', error);
+          return { error: `Failed to update event details: ${error instanceof Error ? error.message : String(error)}` };
         }
-    }
+      }
 
     async approveEvent(event_id: string) {
         try {

@@ -3,7 +3,7 @@ import { BookingDetails } from "./bookingdetails";
 export interface events {
     event_id: string;
     title: string;
-    event_title: string;
+    event_title: string; // Intentional field
     description: string;
     date: string;
     location: string;

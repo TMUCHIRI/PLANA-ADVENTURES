@@ -1,8 +1,6 @@
-// src/app/components/admin-events/admin-events.component.ts
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../../../services/events.service';
+import { EventsService, Event } from '../../../services/events.service'; // Import Event
 import { CommonModule } from '@angular/common';
-import { events } from '../../interfaces/events';
 
 @Component({
   selector: 'app-admin-events',
@@ -12,7 +10,7 @@ import { events } from '../../interfaces/events';
   styleUrls: ['./admin-events.component.css']
 })
 export class AdminEventsComponent implements OnInit {
-  events: events[] = [];
+  events: Event[] = []; // Use Event instead of events
 
   constructor(private eventsService: EventsService) {}
 
@@ -34,11 +32,11 @@ export class AdminEventsComponent implements OnInit {
 
   approveEvent(eventId: string) {
     this.eventsService.approveEvent(eventId).subscribe(
-      (response) => {
+      (response: { message: string }) => {
         console.log(response.message);
         this.fetchAllEvents(); // Refresh the event list
       },
-      (error) => {
+      (error: any) => {
         console.error('Error approving event:', error);
       }
     );
@@ -46,11 +44,11 @@ export class AdminEventsComponent implements OnInit {
 
   deleteEvent(eventId: string) {
     this.eventsService.deleteEvent(eventId).subscribe(
-      (response) => {
+      (response: { message: string }) => {
         console.log(response.message);
         this.fetchAllEvents(); // Refresh the event list
       },
-      (error) => {
+      (error: any) => {
         console.error('Error deleting event:', error);
       }
     );

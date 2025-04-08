@@ -1,8 +1,9 @@
-// src/app/components/admin-dashboard/admin-dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminDashboardService } from '../../../services/admin-dashboard.service';
 import { ChartModule } from 'primeng/chart';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,9 +18,11 @@ export class AdminDashboardComponent implements OnInit {
   totalRevenue: number = 0;
 
   userChartData: any;
+  userRolesOptions: any;
   eventChartData: any;
   revenueChartData: any;
   userRolesData: any;
+  userRoles: { [key: string]: number } = {};
 
   constructor(private adminDashboardService: AdminDashboardService) {}
 
@@ -60,6 +63,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.adminDashboardService.getUserCountRole().subscribe(
       (response) => {
+        this.userRoles = response;
         this.updateUserRolesChart(response);
       },
       (error) => {
@@ -83,19 +87,34 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   updateUserRolesChart(data: any) {
-    const roles = Object.keys(data); // Extract roles, e.g., ['user', 'manager']
-    const counts = Object.values(data); // Extract counts, e.g., [5, 2]
+    const roles = Object.keys(data);
+    const counts = Object.values(data);
 
-    // Update pie chart data
     this.userRolesData = {
       labels: roles,
       datasets: [
         {
           data: counts,
-          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'], // Colors for different roles
+          backgroundColor: ['#42A5F5', '#66BB6A', '#FFA726'],
           hoverBackgroundColor: ['#64B5F6', '#81C784', '#FFB74D']
         }
       ]
+    };
+
+    // Chart options for responsiveness
+    this.userRolesOptions = {
+      maintainAspectRatio: false, // Allow chart to adjust to container
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: {
+            font: {
+              size: 12
+            }
+          }
+        }
+      }
     };
   }
 
@@ -126,5 +145,51 @@ export class AdminDashboardComponent implements OnInit {
       ]
     };
   }
-}
 
+  generatePDF() {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(18);
+    doc.text('Admin Dashboard Analytics Report', 10, 10);
+
+    // Date
+    doc.setFontSize(12);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 10, 20);
+
+    // Analytics Summary Table
+    doc.setFontSize(14);
+    doc.text('Analytics Summary', 10, 30);
+
+    autoTable(doc, {  // Use autoTable directly
+      startY: 35,
+      head: [['Metric', 'Value']],
+      body: [
+        ['Number of Users', this.numberOfUsers.toString()],
+        ['Number of Events', this.numberOfEvents.toString()],
+        ['Total Revenue', `KSH ${this.totalRevenue.toLocaleString()}`]
+      ],
+      theme: 'striped',
+      headStyles: { fillColor: [54, 194, 206] }, // #36C2CE
+      styles: { fontSize: 12, cellPadding: 3 }
+    });
+
+    // User Roles Breakdown Table
+    doc.setFontSize(14);
+    const finalY = (doc as any).lastAutoTable.finalY + 10; // Still needs 'any' for lastAutoTable
+    doc.text('User Roles Breakdown', 10, finalY);
+
+    const userRolesData = Object.entries(this.userRoles).map(([role, count]) => [role, count.toString()]);
+    autoTable(doc, {  // Use autoTable directly
+      startY: finalY + 5,
+      head: [['Role', 'Count']],
+      body: userRolesData,
+      theme: 'striped',
+      headStyles: { fillColor: [54, 194, 206] }, // #36C2CE
+      styles: { fontSize: 12, cellPadding: 3 }
+    });
+
+    // Save the PDF
+    doc.save('Admin_Dashboard_Report.pdf');
+  }
+}

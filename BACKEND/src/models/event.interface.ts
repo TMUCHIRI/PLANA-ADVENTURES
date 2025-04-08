@@ -1,5 +1,5 @@
 export interface Event {
-    event_id: string;
+    event_id: string; // Add this property
     title: string;
     description: string;
     date: string;
@@ -9,4 +9,5 @@ export interface Event {
     image: string;
     total_tickets: number;
     available_tickets: number;
+    isApproved: boolean;
 }

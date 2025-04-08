@@ -12,7 +12,10 @@
 
   <div class="bottom">
     <div class="header-text">
+      <div class="spacer"></div>
       <h4>ANALYTICS</h4>
+      <div class="spacer"></div>
+      <button class="generate-report-btn" (click)="generatePDF()">Generate PDF Report</button>
     </div>
 
     <div class="analysis">
@@ -25,14 +28,14 @@
         <p>{{ numberOfEvents }}</p>
       </div>
       <div class="card">
-        <h5>REVENUE</h5>
+        <i class="fa-solid fa-money-check-dollar"></i>
         <p>KSH {{ totalRevenue }}</p>
       </div>
     </div>
 
     <div class="charts">
       <div class="chart-container">
-        <p-chart type="pie" [data]="userRolesData"></p-chart>
+        <p-chart type="pie" [data]="userRolesData" [options]="userRolesOptions"></p-chart>
       </div>
   
       <div class="chart-container">

@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "username": "admin",
     "email": "admintim@example.com",
-    "password": "tim12345"
+    "password": "adminpass123"
 }
 
 ###LOGIN USER
@@ -13,8 +13,8 @@ POST http://localhost:5500/users/login
 Content-Type: application/json
 
 {
-    "email": "admin@example.com",
-    "password": "tim"
+    "email": "admintim@example.com",
+    "password": "adminpass123"
 }
 
 
@@ -30,7 +30,7 @@ Content-Type: application/json
 
 
 ### FETCH SINGLE USER
-GET http://localhost:5500/users/057edb15-8d99-48b9-a253-3c27edc88f01
+GET http://localhost:5500/users/dc14ba01-77b1-4729-9a46-1cf33213f3a6
 Content-Type: application/json
 
 
@@ -39,7 +39,7 @@ PUT http://localhost:5500/users/switch-role
 Content-Type: application/json
 
 {
-    "user_id":"fa4957fa-17cd-40e5-8568-0b9660afa1f6"
+    "user_id":"dc14ba01-77b1-4729-9a46-1cf33213f3a6"
 }
 
 
